@@ -1,112 +1,138 @@
-🌱 EcoBot AI – Green Hydrogen Chatbot
+# 🤖 EcoBot AI – Green Hydrogen Chatbot
 
-EcoBot AI is an interactive web-based chatbot designed to educate users about green hydrogen, energy storage technologies, and the net-zero transition. It uses Natural Language Processing (NLP) to understand user queries and respond intelligently.
+EcoBot AI is an intelligent chatbot built using **Python (Flask)** and **Natural Language Processing (NLP)** to provide information about **Green Hydrogen, energy storage, and net-zero transition**.
 
-🚀 Features
+It features a modern UI, real-time chat interaction, and smart intent-based responses.
 
-💬 Interactive chatbot interface
-🌍 Focus on Green Hydrogen & Sustainability
-🧠 NLP-based intent recognition using NLTK
-🎨 Modern glassmorphism UI with animated background
-📊 Supports HTML tables for technical comparisons
-💾 Export chat history as a text file
+---
 
-🛠️ Tech Stack
+## 🚀 Features
 
-Frontend: HTML, CSS, JavaScript
-Backend: Python (Flask)
-NLP: NLTK (tokenization + stemming)
-Data: JSON-based intent system
+* 💬 Interactive chatbot interface
+* 🧠 NLP-based response system using NLTK
+* 🌱 Focus on Green Hydrogen & sustainability topics
+* 📊 Supports tables and formatted responses
+* 💾 Chat history download feature
+* 🎨 Modern animated UI (Glassmorphism + bubbles)
 
-📂 Project Structure
-├── app.py                # Flask backend server
-├── chatbot_logic.py      # NLP + response logic
-├── intents.json          # Chatbot training data
-├── templates/
-│   └── index.html        # Frontend UI
-├── static/
-│   └── style.css         # Styling
+---
 
-⚙️ How It Works
-1. Backend Server
+## 🛠️ Tech Stack
 
-The Flask app handles routing and communication between frontend and chatbot logic.
+* 🐍 Python (Flask)
+* 🧠 NLTK (Natural Language Processing)
+* 🌐 HTML, CSS, JavaScript
+* 🎨 Custom UI with animations
 
-/ → Loads chatbot UI
-/get_response → Processes user input and returns response
+Backend server: 
+Chatbot logic: 
 
-2. Chatbot Logic
+---
 
-The chatbot processes text using:
+## 📂 Project Structure
 
-Tokenization
-Stemming
-Keyword matching
+```id="q9b3hx"
+project/
+│── app.py
+│── chatbot_logic.py
+│── intents.json
+│
+│── templates/
+│   └── index.html
+│
+│── static/
+│   └── style.css
+```
 
-It selects the best matching intent based on word overlap.
+Frontend UI: 
+Styling: 
 
-3. Intents System
+---
 
-All chatbot knowledge is stored in a structured JSON file:
+## ⚙️ Installation & Setup
 
-patterns → user inputs
-responses → bot replies
+### 1️⃣ Clone the repository
 
-4. Frontend UI
+```bash id="8t5q2a"
+git clone https://github.com/24A31A05KT/FSD-Student-Attendance-App
+cd FSD-Student-Attendance-App
+```
 
-The UI provides:
+---
 
-Animated chat interface
-Typing indicator
-Save chat feature
-Smooth messaging experience
+### 2️⃣ Install dependencies
 
-5. Styling
-
-Modern UI design using:
-
-Gradient backgrounds
-Glassmorphism
-Floating hydrogen bubble animations
-
-▶️ Installation & Setup
-1. Clone the Repository
-git clone <your-repo-url>
-cd <project-folder>
-
-2. Install Dependencies
+```bash id="f3k9sl"
 pip install flask nltk
+```
 
-3. Run the Application
+---
+
+### 3️⃣ Run the application
+
+```bash id="4jx7mh"
 python app.py
+```
 
-4. Open in Browser
+---
+
+### 4️⃣ Open in browser
+
+```id="2plx8c"
 http://127.0.0.1:5000
+```
 
-💡 Example Questions You Can Ask
+---
 
-What is green hydrogen?
-How is hydrogen produced?
-Compare batteries and hydrogen
-What are electrolyzers?
-What are the challenges?
+## 🧠 How It Works
 
-🔮 Future Improvements
-🤖 Use machine learning models instead of rule-based matching
-🌐 Deploy online (Heroku / Render / AWS)
-📱 Mobile responsiveness improvements
-🧩 Add voice input/output
-📊 Integrate real-time energy data
+* User sends a message from UI
+* Flask backend receives request
+* NLP processes text (tokenization + stemming)
+* Best matching intent is selected
+* Bot responds with predefined answers
 
-🤝 Contributing
+Intent data: 
 
-Contributions are welcome!
-Feel free to fork the repo and submit a pull request.
+---
 
-📜 License
+## 📊 Example Topics Covered
 
-This project is open-source and available under the MIT License.
+* What is Green Hydrogen
+* Electrolysis process
+* Battery vs Hydrogen comparison
+* Storage methods
+* Net-zero transition
 
+---
 
+## 🎯 Future Improvements
 
+* 🤖 Deep learning chatbot (TensorFlow / Transformers)
+* 🌐 Multi-language support
+* 📱 Mobile-friendly UI
+* 🔊 Voice input/output
 
+---
+
+## 🤝 Contributing
+
+Feel free to fork and improve the project!
+
+---
+
+## 📜 License
+
+This project is for educational and research purposes.
+
+---
+
+## 👨‍💻 Author
+
+**Jagan Raju**
+
+---
+
+## ⭐ Support
+
+If you like this project, give it a ⭐ on GitHub!
