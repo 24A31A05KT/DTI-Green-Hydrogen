@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Green Hydrogen Guide</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <div class="bubbles">
+        <div class="bubble"></div><div class="bubble"></div>
+        <div class="bubble"></div><div class="bubble"></div>
+        <div class="bubble"></div><div class="bubble"></div>
+        <div class="bubble"></div>
+    </div>
+
+    <div class="chat-container">
+        
+        <div class="chat-header">
+            <div class="avatar">
+                <svg viewBox="0 0 24 24" style="width: 24px; height: 24px; fill: white;">
+                    <path d="M12 22C12 22 4 16.14 4 9.5C4 5.36 7.36 2 11.5 2C13.88 2 16.03 3.12 17.43 4.88C17.76 5.3 18.06 5.76 18.3 6.25C19.38 8.44 20 10.95 20 13.5C20 18.23 16.63 22 12 22ZM11.5 4C8.46 4 6 6.46 6 9.5C6 14.36 12 19.33 12 19.33C12 19.33 18 14.36 18 9.5C18 6.46 15.54 4 12.5 4H11.5Z"/>
+                </svg>
+            </div>
+            <h2>EcoBot AI</h2>
+            
+            <button onclick="downloadChat()" style="margin-left: auto; background: rgba(255,255,255,0.2); border: 1px solid white; color: white; padding: 5px 10px; border-radius: 15px; cursor: pointer; font-size: 0.8rem; transition: 0.3s;">
+                💾 Save Chat
+            </button>
+        </div>
+
+        <div class="chat-messages" id="chat-messages">
+            <div class="message bot-message">
+                Hello! 🌍 I'm EcoBot. I am programmed with extensive research on Green Hydrogen, advanced energy storage, and the net-zero transition. What would you like to explore?
+            </div>
+        </div>
+
+        <div class="typing-indicator" id="typing-indicator">
+            <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+        </div>
+
+        <div class="chat-input-area">
+            <input type="text" id="user-input" class="chat-input" placeholder="Type your message..." onkeypress="handleKeyPress(event)">
+            <button class="send-btn" onclick="sendMessage()">
+                <svg viewBox="0 0 24 24">
+                    <path d="M2.01 21L23 12L2.01 3L2 10l15 2l-15 2z"/>
+                </svg>
+            </button>
+        </div>
+        
+    </div>
+
+    <script>
+        const chatMessages = document.getElementById('chat-messages');
+        const userInput = document.getElementById('user-input');
+        const typingIndicator = document.getElementById('typing-indicator');
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        async function sendMessage() {
+            const text = userInput.value.trim();
+            if (text === '') return;
+
+            // 1. Add user message
+            appendMessage(text, 'user-message');
+            userInput.value = '';
+
+            // 2. Show typing animation
+            typingIndicator.style.display = 'flex';
+            chatMessages.appendChild(typingIndicator); 
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            // 3. Send to Flask Backend
+            try {
+                const response = await fetch('/get_response', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: text })
+                });
+                
+                const data = await response.json();
+                
+                // 4. Hide typing and show bot response
+                typingIndicator.style.display = 'none';
+                appendMessage(data.reply, 'bot-message');
+
+            } catch (error) {
+                typingIndicator.style.display = 'none';
+                appendMessage("Connection error. Is the Python server running?", 'bot-message');
+            }
+        }
+
+        function appendMessage(text, className) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${className}`;
+            
+            // This line allows the HTML tables from your JSON to render visually!
+            messageDiv.innerHTML = text; 
+            
+            chatMessages.appendChild(messageDiv);
+            
+            // Ensure the typing indicator stays at the bottom if it's visible
+            if(typingIndicator.style.display === 'flex') {
+                chatMessages.appendChild(typingIndicator);
+            }
+            
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        // --- THE NEW EXPORT FEATURE ---
+        function downloadChat() {
+            const messages = document.querySelectorAll('.message');
+            if (messages.length === 0) return;
+
+            let chatHistory = "--- Green Hydrogen Research Chat Log ---\n\n";
+
+            messages.forEach(msg => {
+                if (msg.classList.contains('user-message')) {
+                    chatHistory += "You: " + msg.innerText + "\n";
+                } else if (msg.classList.contains('bot-message')) {
+                    // Replace table HTML with a clean text note for the text file
+                    let text = msg.innerText;
+                    if (msg.innerHTML.includes('<table')) {
+                        text += "\n[A Data Table was displayed here]";
+                    }
+                    chatHistory += "EcoBot: " + text + "\n\n";
+                }
+            });
+
+            // Create a Blob containing the text data
+            const blob = new Blob([chatHistory], { type: "text/plain" });
+            const url = URL.createObjectURL(blob);
+            
+            // Create a temporary link to trigger the download
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = "EcoBot_Research_Log.txt";
+            document.body.appendChild(a);
+            a.click();
+            
+            // Cleanup
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+    </script>
+</body>
+</html>
